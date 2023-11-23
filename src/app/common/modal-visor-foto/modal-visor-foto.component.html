@@ -1,0 +1,19 @@
+<div cdkDrag cdkDragRootElement=".cdk-overlay-pane">
+    <h6 mat-dialog-title cdkDragHandle class="text-left mb-1">
+        VISOR FOTOS
+        <button type="button" class="btn-close btn-close-white float-end" (click)="cerrarModal()" style="margin-top: 8px; margin-right: 8px; opacity: 1; width: 8px; height: 8px;">
+        </button>
+    </h6>
+
+    <mat-dialog-content class="mat-typography" style="overflow: hidden !important;">
+        <div class="class">
+            <div class="row">
+                <div class="col-12">
+                    <!-- #f0ad4e -->
+                    <app-image-viewer [images]="fotos" [idContainer]="'fotoSeleccionada'" [primaryColor]="'#FF6D01'" [loadOnInit]="true" [showPDFOnlyOption]="false" [enableTooltip]="false">
+                    </app-image-viewer>
+                </div>
+            </div>
+        </div>
+    </mat-dialog-content>
+</div>

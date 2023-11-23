@@ -1,0 +1,23 @@
+<div cdkDrag cdkDragRootElement=".cdk-overlay-pane">
+    <h6 mat-dialog-title cdkDragHandle class="text-left">
+        VISOR VIDEOS
+        <button type="button" class="btn-close btn-close-white float-end" (click)="cerrarModal()" style="margin-top: 8px; margin-right: 8px; opacity: 1; width: 8px; height: 8px;">
+        </button>
+    </h6>
+
+    <mat-dialog-content class="mat-typography">
+        <div class="class">
+            <div class="row">
+                <div class="col-12">
+                    Por compatibilidad del navegador, solo se pueden reproducir videos en formato .Mp4, .Ogg y .WebM
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <ng-image-slider [images]="videos" [imageSize]="{width: '100%'}">\
+                    </ng-image-slider>
+                </div>
+            </div>
+        </div>
+    </mat-dialog-content>
+</div>

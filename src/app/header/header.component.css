@@ -1,0 +1,98 @@
+.overlay {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 10;
+    top: 0;
+    left: 0;
+    background-color: #292b2c;
+    overflow-x: hidden;
+    transition: 0.5s;
+}
+
+.closebtn {
+    position: absolute;
+    top: 5px;
+    right: 10px;
+    font-size: 26px !important;
+    text-decoration: none;
+    color: white;
+}
+
+.header {
+    font-size: 20px;
+    color: white;
+    line-height: 40px !important;
+    height: 43px;
+    background: #969696;
+    user-select: none;
+    padding-left: 15px;
+}
+
+.overlay ul a {
+    display: block;
+    height: 100%;
+    width: 100%;
+    line-height: 45px;
+    font-size: 15px !important;
+    color: white;
+    padding-left: 10px;
+    box-sizing: border-box;
+    border-bottom: 1px solid black;
+    border-top: 1px solid rgba(255, 255, 255, .1);
+    transition: .4s;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.overlay ul a.sub-menu {
+    line-height: 35px;
+    padding-left: 40px;
+}
+
+.overlay ul a.sub-sub-menu {
+    line-height: 35px;
+    padding-left: 70px;
+}
+
+.overlay ul li:hover a {
+    padding-left: 20px;
+}
+
+.overlay ul li:hover a.sub-menu {
+    padding-left: 50px;
+}
+
+.overlay ul li:hover a.sub-sub-menu {
+    padding-left: 80px;
+}
+
+.overlay ul a i {
+    margin-right: 16px;
+}
+
+@media screen and (max-height: 450px) {
+    .closebtn {
+        font-size: 26px !important;
+        top: 5px;
+        right: 10px;
+    }
+}
+
+.btn-login {
+    padding: 3px 10px;
+}
+
+.span {
+    font-size: 22px !important;
+    cursor: pointer;
+    color: white;
+}
+
+.icon{
+    width:20px;
+    height: 20px;
+    margin-top:-4px;
+    object-fit: contain;
+    position: relative;
+}

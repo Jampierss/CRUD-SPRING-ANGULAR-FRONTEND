@@ -1,0 +1,23 @@
+<div cdkDrag cdkDragRootElement=".cdk-overlay-pane">
+    <h6 mat-dialog-title cdkDragHandle class="text-left">
+      {{titulo}}
+    </h6>
+
+    <mat-dialog-content class="mat-typography">
+        <div class="class">
+            <div class="row">
+                <div class="col-12">
+                    <p>{{texto}}</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="float-end">
+                        <button type="button" class="btn custom-button me-1" (click)="si()">Si</button>
+                        <button type="button" class="btn custom-button me-1" (click)="no()">No</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </mat-dialog-content>
+  </div>  

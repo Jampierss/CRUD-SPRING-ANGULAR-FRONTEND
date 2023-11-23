@@ -1,0 +1,152 @@
+<div class="container-fluid">
+    <div class="row mb-3 mt-2">
+        <div class="col-12">
+            <div class="float-end">
+                <button type="button" class="btn custom-button me-1" style="width: 100px !important;"
+                    [disabled]="blnActive"
+                    (click)="nuevo()">Nuevo</button>
+                <button type="button" class="btn custom-button me-1" style="width: 100px !important;"
+                    [disabled]="!blnActive"
+                    (click)="cancelar()">Cancelar</button>
+                <button type="button" class="btn custom-button me-1" style="width: 100px !important;" 
+                    [disabled]="blnActive"
+                    (click)="editar()">Modificar</button>
+                <button type="button" class="btn custom-button" style="width: 100px !important;"
+                    [disabled]="!blnActive"
+                    (click)="guardar()">Guardar</button>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <div class="table-responsive" style="min-height: 45vh; max-height: 45vh;">
+                <table class="custom-table-maestros table table-bordered table-hover">
+                    <thead>
+                        <tr style="user-select: none;">
+                            <th class="align-middle text-center" style="width: 3%;">Nro</th>
+                            <th class="align-middle text-center" style="width: 8%;">Nro Doc.</th>
+                            <th class="align-middle text-center" style="width: 10%;">Razón Social</th>
+                            <th class="align-middle text-center">Nombre Comercial</th>
+                            <th class="align-middle text-center" style="width: 20%;">Cargo</th>
+                            <th class="align-middle text-center" style="width: 10%;">Estado</th>
+                        </tr>
+                    </thead>
+                    <tbody style="cursor: default;">
+                        <tr *ngFor="let cli of clientes; let i = index" (click)="verCliente(cli.id, i)"
+                            [ngClass]="{'table-active': i===filaSeleccionada}">
+                            <td class="text-uppercase">{{ cli.nro }}</td>
+                            <td class="text-uppercase">{{ cli.nroDocumentoIdentidad }}</td>
+                            <td class="text-uppercase">{{ cli.razonSocial }}</td>
+                            <td class="text-uppercase">{{ cli.nombreComercial }}</td>
+                            <td class="text-uppercase">{{ cli.cargo.nombre }}</td>
+                            <td class="text-uppercase">{{ cli.estado.nombre }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-1">
+        <div class="col-12">
+            <paginator-nav *ngIf="paginador" [enlacePaginador]="rutaPaginador" [paginador]="paginador" [habilitado]="true" [verNumeros]="true" (filtro)="filtrar($event)"></paginator-nav>
+        </div>
+    </div>
+    <div class="bg-maestro" *ngIf="clienteSeleccionado">
+        <div class="row">
+            <div class="col-5">
+                <div class="row">
+                    <label class="col-12 col-sm-3 col-form-label">Doc.&nbsp;Identidad</label>
+                    <div class="col-12 col-sm-4">
+                        <select [compareWith]="compararAuxiliar" class="form-select pt-1"
+                                [disabled]="!blnActive"
+                                [(ngModel)]="clienteSeleccionado.tipoDocumentoIdentidad"> 
+                            <option [ngValue]="undefined">Seleccione</option>
+                            <option *ngFor="let tip of tiposDocumentoIdentidad" [ngValue]="tip">{{ tip.nombre }}</option>
+                        </select>
+                    </div>
+                    <div class="col-12 col-sm-5">
+                        <input type="text" class="form-control text-uppercase"
+                            [disabled]="!blnActive"
+                            [(ngModel)]="clienteSeleccionado.nroDocumentoIdentidad"
+                            style="height: 30px;">
+                    </div>
+                </div>
+                <div class="row">
+                    <label class="col-12 col-sm-3 col-form-label">Razón&nbsp;Social</label>
+                    <div class="col-9">
+                        <input type="text" class="form-control text-uppercase"
+                            [disabled]="!blnActive"
+                            [(ngModel)]="clienteSeleccionado.razonSocial"
+                            style="height: 30px;">
+                    </div>
+                </div>
+                <div class="row">
+                    <label class="col-12 col-sm-3 col-form-label">Nombre&nbsp;Comercial</label>
+                    <div class="col-9">
+                        <input type="text" class="form-control text-uppercase"
+                            [disabled]="!blnActive"
+                            [(ngModel)]="clienteSeleccionado.nombreComercial"
+                            style="height: 30px;">
+                    </div>
+                </div>
+            </div>
+            <div class="col-5">
+                <div class="row">
+                    <label class="col-12 col-sm-3 col-form-label">Dirección</label>
+                    <div class="col-9">
+                        <input type="text" class="form-control text-uppercase"
+                            [disabled]="!blnActive"
+                            [(ngModel)]="clienteSeleccionado.direccion"
+                            style="height: 30px;">
+                    </div>
+                </div>
+                <div class="row">
+                    <label class="col-12 col-sm-3 col-form-label">Cargo</label>
+                    <div class="col-12 col-sm-9">
+                        <select [compareWith]="compararObjeto" class="form-select pt-1"
+                                [disabled]="!blnActive"
+                                [(ngModel)]="clienteSeleccionado.cargo"> 
+                            <option [ngValue]="undefined">Seleccione</option>
+                            <option *ngFor="let car of cargos" [ngValue]="car">{{ car.nombre }}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row">
+                    <label class="col-12 col-sm-3 col-form-label">Estado</label>
+                    <div class="col-12 col-sm-9">
+                        <select [compareWith]="compararAuxiliar" class="form-select pt-1"
+                                [disabled]="!blnActive"
+                                [(ngModel)]="clienteSeleccionado.estado">
+                            <option [ngValue]="undefined">Seleccione</option>
+                            <option *ngFor="let est of estados" [ngValue]="est">{{ est.nombre }}</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="col-2">
+                <div class="row mb-1">
+                    <label class="col-sm-2 col-form-label" for="fotoForm">Foto</label>
+                    <div class="col-sm">
+                        <img *ngIf="!imagenVistaPrevia" src="assets/img/no-image.jpg" class="border bg-secondary" height="185" width="100%"/>
+                        <img *ngIf="imagenVistaPrevia" id="fotoForm" [src]="imagenVistaPrevia" class="border bg-secondary" height="185" width="100%"/>
+                    </div>
+                </div>
+
+                <div class="form-group row mb-0">
+                    <div class="col-sm-2">
+                        <input id="fotoRuta" type="file" accept="image/*" name="file" [(ngModel)]="fotoInput" style="display: none;" (change)="cargarFoto($event)"/>
+                    </div>
+                    <div class="col-sm">
+                        <button type="button" class="btn btn-secondary mb-1" onclick="document.getElementById('fotoRuta').click();" [disabled]="!blnActive">
+                            <img src="assets/img/search_color.png">
+                        </button>
+                        <span>&nbsp;</span>
+                        <button type="button" class="btn btn-secondary mb-1" (click)="quitarFoto()" [disabled]="!blnActive">
+                            <img src="assets/img/delete.png">
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

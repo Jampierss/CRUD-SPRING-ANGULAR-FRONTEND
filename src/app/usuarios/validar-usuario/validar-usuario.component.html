@@ -1,0 +1,24 @@
+<div class="card text-center">
+    <div class="card-header">CAMBIAR CONTRASEÑA</div>
+    <div class="card-body">
+        <form>
+            <div class="form-group row">
+                <div class="col-sm-4"></div>
+                <div class="col-sm-4 px-md-4">
+                    <div class="col-sm mb-2">
+                        <input [(ngModel)]="password" [disabled]="blnGuardando" maxlength="8" type="password" 
+                         class="form-control" name="username" id="password" placeholder="Password" autofocus required>
+                    </div>
+                    <div class="col-sm mb-2">
+                        <input [(ngModel)]="rpassword" [disabled]="blnGuardando" maxlength="8" type="password" 
+                         class="form-control" name="password" id="rpassword" placeholder="Repetir Password" required>
+                    </div>
+                    <div class="col-sm mb-2">
+                        <input [disabled]="blnGuardando" (click)="actualizar()" type="submit" class="btn btn-lg custom-button btn-block w-100" value="Actualizar">
+                    </div>
+                </div>
+                <div class="col-sm-4"></div>
+            </div>
+        </form>
+    </div>
+</div>

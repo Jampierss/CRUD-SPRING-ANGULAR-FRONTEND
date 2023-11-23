@@ -1,0 +1,16 @@
+input[type=checkbox] {
+    vertical-align: middle;
+}
+
+tr {
+    height: 30px !important;
+    min-height: 30px !important;
+    max-height: 30px !important;
+    margin: 0px !important;
+    padding: 0px !important;
+}
+
+.table-wrapper {
+    width: 100%;
+    max-height: 35vh;
+}

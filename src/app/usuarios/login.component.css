@@ -1,0 +1,20 @@
+.titulo {
+    font-size: 18px;
+}
+
+.custom-button {
+    max-width: 100%;
+    padding: 5px;
+}
+
+.card-custom {
+    border: 0px !important;
+}
+
+.card-header{
+    padding: .75rem 1.25rem !important;
+}
+
+.form-group {
+    margin-bottom: 1rem;
+}

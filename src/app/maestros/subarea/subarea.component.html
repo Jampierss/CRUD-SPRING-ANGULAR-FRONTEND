@@ -1,0 +1,131 @@
+<div class="container-fluid">
+    <div class="row mt-2 mb-3">
+        <div class="col-2">
+            <div class="row">
+                <label class="col-4 col-form-label">Nombre:</label>
+                <div class="col-8 col-xxl-6">
+                    <input type="text" class="form-control text-uppercase"
+                        [(ngModel)]="nombreFiltro" (keyup) = "filtrar()"
+                        style="height: 30px;">
+                </div>
+            </div>
+        </div>
+        <div class="col-2">
+            <div class="row">
+                <label class="col-4 col-form-label">Estado:</label>
+                <div class="col-8">
+                    <select [compareWith]="compararObjeto" class="form-select pt-1" 
+                        [(ngModel)]="estadoFiltro" (change) = "filtrar()">
+                        <option [ngValue]="undefined">Todas</option>
+                        <option *ngFor="let est of estados" [ngValue]="est">{{ est.nombre }}</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="col-8">
+            <div class="float-end">
+                <button type="button" class="btn custom-button me-1" style="width: 100px !important;"
+                    [disabled]="!eventoNuevo || blnGuardandoDatos"
+                    (click)="nuevo()">Nuevo</button>
+                <button type="button" class="btn custom-button me-1" style="width: 100px !important;"
+                    [disabled]="!eventoGuardar || blnGuardandoDatos"
+                    (click)="cancelar()">Cancelar</button>
+                <button type="button" class="btn custom-button me-1" style="width: 100px !important;" 
+                    [disabled]="!eventoModificar || blnGuardandoDatos"
+                    (click)="modificar()">Modificar</button>
+                <button type="button" class="btn custom-button me-1" style="width: 100px !important;"
+                    [disabled]="!eventoGuardar || blnGuardandoDatos"
+                    (click)="guardar()">Guardar</button>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <div class="table-responsive" style="min-height: 75vh; max-height: 75vh;">
+                <table class="custom-table-maestros table table-bordered table-hover">
+                    <thead>
+                        <tr style="user-select: none;">
+                            <th class="align-middle text-center" style="width: 3%;">Nro</th>
+                            <th class="align-middle text-center" style="width: 17%;">Area</th>
+                            <th class="align-middle text-center" style="width: 15%;">Nombre</th>
+                            <th class="align-middle text-center" style="width: 10%;">Abreviatura</th>
+                            <th class="align-middle text-center">Observación</th>
+                            <th class="align-middle text-center" style="width: 10%;">Estado</th>
+                        </tr>
+                    </thead>
+                    <tbody style="cursor: default;">
+                        <tr *ngFor="let sub of subareas; let i = index;" (click)="verSubarea(sub, i)"
+                        [ngClass]="{'table-active': i===editableTable1}">
+                            <td>{{ sub.nro }}</td>
+                            <td>
+                                <input type="text" [disabled]="i!=validarFila" class="border-0 text-uppercase bg-transparent"
+                                    style="width: 100%;outline: none;" *ngIf="sub.area" [(ngModel)]="sub.area.nombre">
+                            </td>
+                            <!-- <td>
+                                <mat-form-field class="border-0 text-uppercase bg-transparent">
+                                    <input type="text" matInput [formControl]="myControl" [matAutocomplete]="auto">
+                                    <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+                                      @for (option of filteredOptions | async; track option) {
+                                        <mat-option [value]="option">{{option.name}}</mat-option>
+                                      }
+                                    </mat-autocomplete>
+                                  </mat-form-field>
+                            </td> -->
+                            <!-- <td>
+                                <input type="text" class="border-0 text-uppercase bg-transparent"
+                                    (keyup)="cambiarValorEstado($event)"
+                                    [disabled]="i!=validarFila"
+                                    matInput [matAutocomplete]="autoF"
+                                    [(ngModel)]="sub.area.nombre"
+                                    style="width: 100%;height: 20px;outline: none;"
+                                    autocomplete="autoF">
+                                <mat-autocomplete #autoF="matAutocomplete" [displayWith]="mostrarEstado">
+                                    <mat-option style="height: 22px;font-size: 0.75rem"
+                                        *ngFor="let est of estadoF | async" [value]="est">
+                                        {{est.nombre}}
+                                    </mat-option>
+                                </mat-autocomplete>
+                            </td> -->
+                            <td>
+                                <input type="text" [disabled]="i!=validarFila" class="border-0 text-uppercase bg-transparent"
+                                    style="width: 100%;outline: none;" [(ngModel)]="sub.nombre">
+                            </td>
+                            <td>
+                                <input type="text" [disabled]="i!=validarFila" class="border-0 text-uppercase bg-transparent"
+                                    style="width: 100%;outline: none;" [(ngModel)]="sub.abreviatura">
+                            </td>
+                            <td>
+                                <input type="text" [disabled]="i!=validarFila" class="border-0 text-uppercase bg-transparent"
+                                    style="width: 100%;outline: none;" [(ngModel)]="sub.observacion">
+                            </td>
+                            <!-- <td>
+                                <input type="text" [disabled]="i!=validarFila" class="border-0 text-uppercase bg-transparent"
+                                    style="width: 100%;outline: none;" [(ngModel)]="sub.estado.nombre">
+                            </td> -->
+                            <td>
+                                <input type="text" class="border-0 text-uppercase bg-transparent"
+                                    (keyup)="cambiarValorEstado($event)"
+                                    [disabled]="i!=validarFila"
+                                    matInput [matAutocomplete]="autoF"
+                                    [(ngModel)]="sub.estado"
+                                    style="width: 100%;height: 20px;outline: none;"
+                                    autocomplete="autoF">
+                                <mat-autocomplete #autoF="matAutocomplete" [displayWith]="mostrarEstado">
+                                    <mat-option style="height: 22px;font-size: 0.75rem"
+                                        *ngFor="let est of estadoF | async" [value]="est">
+                                        {{est.nombre}}
+                                    </mat-option>
+                                </mat-autocomplete>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-1">
+        <div class="col-12">
+            <paginator-nav *ngIf="paginador" [enlacePaginador]="rutaPaginador" [paginador]="paginador" [habilitado]="!blnGuardandoDatos" [verNumeros]="true" (filtro)="filtrar($event)"></paginator-nav>
+        </div>
+    </div>
+</div>

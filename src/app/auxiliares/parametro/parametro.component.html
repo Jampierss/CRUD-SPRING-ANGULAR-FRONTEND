@@ -1,0 +1,58 @@
+<div class="container-fluid">
+  <div class="row px-3">
+    <div class="col-12 col-md-4 align-middle font-weight-bold align-self-center mt-2 pl-0">
+      {{'Maestro de parámetros' | uppercase}}
+    </div>
+    <div class="col-12 col-md-8 mt-2 pr-0">
+      <div class="float-right">
+        <button [disabled]="parametros && parametros.length>0 && !eventoModificar" (click)="editar()" type="button"
+          id="btnNuevo" class="btn custom-button mr-1">Editar</button>
+        <button [disabled]="parametros && parametros.length>0 && !eventoNuevo" (click)="cancelar()" type="button"
+          id="btnNuevo2" class="btn custom-button mr-1">Cancelar</button>
+        <button [disabled]="parametros && parametros.length>0 && !eventoNuevo" (click)="actualizar()" type="button"
+          id="btnNuevo3" class="btn custom-button mr-1">Actualizar</button>
+      </div>
+    </div>
+  </div>
+  <div class="row mt-2 px-3">
+    <div class="container-fluid col-12 px-0">
+      <div class="table-responsive table-wrapper">
+        <table class="custom-table-maestros table table-bordered table-hover">
+          <thead class="text-dark">
+            <tr style="user-select: none;">
+              <th class="align-middle text-center" style="width:3%;">Nro</th>
+              <th class="align-middle text-center" style="width:7%;">Módulo</th>
+              <th class="align-middle text-center" style="width:15%;">Sub Módulo</th>
+              <th class="align-middle text-center" style="width:20%;">Nombre</th>
+              <th class="align-middle text-center" style="width:45%;">Descripción</th>
+              <th class="align-middle text-center" style="width:10%;">Valor</th>
+            </tr>
+          </thead>
+          <tbody id="tbody" style="cursor: default;">
+            <tr *ngFor="let item of parametros;let i = index" (click)="seleccionarParametro(item, i)"
+              [ngClass]="{'table-active': i===editableTable1}">
+              <td class="align-middle text-center">{{ item.nro }}</td>
+              <td>{{ item.subModulo.modulo.nombre }}</td>
+              <td>{{ item.subModulo.nombre}}</td>
+              <td>{{ item.nombre }}</td>
+              <td>{{ item.descripcion }}</td>
+              <td *ngIf="item.tipo == 'Numero'"contenteditable="false">
+                <input [disabled]="i!=validarFila" maxlength="4" (keypress)="soloNumeros($event)" type="text"
+                  class="border-0 text-uppercase bg-transparent text-center"
+                  style="width: 100%;height: 22px;outline: none;" [(ngModel)]="item.valor">
+              </td>
+              <td *ngIf="item.tipo == 'Texto'" contenteditable="false">
+                <input [disabled]="i!=validarFila" type="text"
+                  class="border-0 text-uppercase bg-transparent text-center"
+                  style="width: 100%;height: 22px;outline: none;" [(ngModel)]="item.valor">
+              </td>              
+              <td *ngIf="item.tipo == 'Booleano'" contenteditable="false" class="align-middle text-center">
+                <mat-slide-toggle color="primary" [disabled]="i!=validarFila" [(ngModel)]="item.valorToggle"></mat-slide-toggle>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

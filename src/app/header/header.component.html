@@ -1,0 +1,64 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark py-0" style="min-height: 32px;">
+    <div class="container-fluid">
+        <span *ngIf="isAuthenticated()" class="span" (click)="openNav()">&#9776;</span>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" 
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="text-white navbar-nav me-auto mb-2 mb-lg-0 ms-3">
+                <span *ngIf="innerWidth > 500">{{titulo}}</span>
+            </ul>
+            <div class="d-flex">
+                <ul class="navbar-nav">
+                    <li *ngIf="!isAuthenticated()">
+                        <a [routerLink]="['/login']" class="btn btn-login btn-outline-success">Login</a>
+                    </li>
+                    <li *ngIf="isAuthenticated()" class="nav-item dropdown show mx-1">
+                        <a class="btn btn-login btn-outline-success dropdown-toggle" href="#" id="navbarDropdown" 
+                           role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            {{ usuario.username }}
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                            <li><button [routerLink]="['/user/miperfil']" class="dropdown-item" type="submit" style="font-size: 12px;">Mi Perfil</button></li>
+                            <li><button (click)="logout()" class="dropdown-item" type="submit" style="font-size: 12px;">Cerrar Sesión</button></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</nav>
+<div id="myNav" class="overlay" *ngIf="isAuthenticated()">
+    <div class="header text-start">
+        <img src="assets/svg/logo-completo-fu.svg" height="30px" width="150px">
+    </div>
+    <a href="javascript:void(0)" class="closebtn" (click)="closeNav()">&times;</a>
+    <ul style="padding-left: 10px;">
+        <ng-container *ngFor="let mod of modulos">
+            <li>
+                <a href="javascript:void(0)" (click)="abrirSubMenu(mod)">
+                    <img [src]="'assets/icons/'+mod.icono" class="icon me-2" alt=""/>
+                    {{mod.nombre}}
+                    <span class="float-end" style="padding-right: 10px;" *ngIf="!mod.abierto">&#9660;</span>
+                    <span class="float-end" style="padding-right: 10px;" *ngIf="mod.abierto">&#9650;</span>
+                </a>
+            </li>
+            <ng-container *ngFor="let sub of mod.subModulos">
+                <li [ngClass]="{'d-none': !mod.abierto}">
+                    <a href="javascript:void(0)" (click)="abrirSubSubMenu(mod,sub)" class="sub-menu">
+                        <img [src]="'assets/icons/'+sub.icon" class="icon" alt=""/>
+                        {{sub.nombre}}
+                        <span class="float-end" style="padding-right: 10px;" *ngIf="!sub.abierto">&#9660;</span>
+                        <span class="float-end" style="padding-right: 10px;" *ngIf="sub.abierto">&#9650;</span>
+                    </a>
+                </li>
+                <li [ngClass]="{'d-none': !sub.abierto}" *ngFor="let men of sub.menus">
+                    <a [routerLink]="[men.ruta]" class="sub-sub-menu" (click)="closeNav()">
+                        {{men.nombre}}
+                    </a>
+                </li>           
+            </ng-container>
+        </ng-container>
+    </ul>
+</div>

@@ -1,0 +1,81 @@
+<div class="container-fluid">
+    <div class="row mt-4">
+        <div class="col-2"></div>
+        <div class="col-8">
+            <div class="row">
+                <div class="col-12">
+                    <h4><u>Datos del Usuario</u></h4>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col mt-1">
+                    <form>
+                        <div class="row mb-1">
+                            <label for="staticNombre" class="col-sm-4 col-form-label">Nombre:</label>
+                            <div class="col-sm-8">
+                                <input [disabled]="true" type="text" class="form-control" id="staticNombre" value="{{nombreCompleto}}">
+                            </div>
+                        </div>
+                        <div class="row mb-1">
+                            <label for="staticUsuario" class="col-sm-4 col-form-label">Usuario:</label>
+                            <div class="col-sm-8">
+                                <input disabled type="text" class="form-control" id="staticUsuario" value="{{usuario}}">
+                            </div>
+                        </div>
+                        <div class="row mb-1">
+                            <label for="staticCorreo" class="col-sm-4 col-form-label">Correo:</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" id="staticCorreo" name="correo" [(ngModel)]="correo" [disabled]="blnGuardandoDatos">
+                            </div>
+                        </div>
+                        <div class="row mb-1">
+                            <label for="staticPerfil" class="col-sm-4 col-form-label">Perfil:</label>
+                            <div class="col-sm-8">
+                                <input disabled type="text" class="form-control" id="staticPerfil" value="{{perfil}}">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div class="row mt-1">
+                <div class="col"><button [disabled]="blnGuardandoDatos" (click)="actualizarDatos()" class="btn custom-button float-right">Actualizar</button></div>
+            </div>
+
+            <div class="row mt-5">
+                <div class="col-12">
+                    <h4><u>Cambio de Contraseña</u></h4>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col mt-1">
+                    <form>
+                        <div class="row mb-1">
+                            <label for="inputPassword" class="col-sm-4 col-form-label">Contraseña actual:</label>
+                            <div class="col-sm-8">
+                                <input disabled type="password" class="form-control" id="inputPassword" placeholder="************">
+                            </div>
+                        </div>
+                        <div class="row mb-1">
+                            <label for="inputNPassword" class="col-sm-4 col-form-label">Nueva contraseña:</label>
+                            <div class="col-sm-8">
+                                <input minlength="6" type="password" class="form-control" id="inputNPassword" placeholder="Password" name="password1" [(ngModel)]="password1" [disabled]="blnGuardandoDatos">
+                            </div>
+                        </div>
+                        <div class="row mb-1">
+                            <label for="inputCPassword" class="col-sm-4 col-form-label">Confirmar contraseña:</label>
+                            <div class="col-sm-8">
+                                <input minlength="6" type="password" class="form-control" id="inputCPassword" placeholder="Password" name="password2" [(ngModel)]="password2" [disabled]="blnGuardandoDatos">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div class="row mt-1">
+                <div class="col"><button [disabled]="blnGuardandoDatos" (click)="actualizar()" class="btn custom-button float-right">Actualizar</button></div>
+            </div>           
+        </div>
+        <div class="col-2"></div>
+    </div>
+</div>

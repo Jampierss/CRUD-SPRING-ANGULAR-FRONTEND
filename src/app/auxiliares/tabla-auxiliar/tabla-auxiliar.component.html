@@ -1,0 +1,109 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12 align-middle font-weight-bold align-self-center mt-2">
+            {{'Maestro de Tabla Auxiliares' | uppercase}}
+        </div>
+    </div>
+
+    <div class="row mt-2">
+        <div class="row col-sm-12 col-lg-3">
+            <label class="col-lg-3 col-sm-3 col-form-label">Módulo&nbsp;</label>
+            <div class="col-sm-9 col-lg-9">
+                <select [compareWith]="compararModulo" class="form-control bg-secondary-2 pt-1"
+                    [disabled]="blnCargandoDatos || blnGuardando"
+                    [(ngModel)]="moduloFiltro" (ngModelChange)="onChangeModulo($event)" *ngIf="modulos">
+                    <option [ngValue]="undefined">Seleccionar</option>
+                    <option *ngFor="let mod of modulos" [ngValue]="mod">{{ mod.nombre }}</option>
+                </select>
+            </div>
+        </div>
+        <div class="row col-sm-12 col-lg-4">
+            <label class="col-lg-4 col-sm-3 col-form-label">Sub Módulo&nbsp;</label>
+            <div class="col-lg-8 col-sm-9">
+                <select [compareWith]="compararSubModulos" class="form-control bg-secondary-2 pt-1"
+                    [disabled]="blnCargandoDatos || blnGuardando"    
+                    [(ngModel)]="subModuloFiltro" (ngModelChange)="onChangeSubModulo($event)" *ngIf="submodulos">
+                    <option [ngValue]="undefined">Seleccionar</option>
+                    <option *ngFor="let sub of submodulos" [ngValue]="sub">{{ sub.nombre }}</option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid mt-4 px-0">
+        <div class="table-wrapper table-responsive">
+            <table class="custom-table-maestros table table-bordered table-hover">
+                <thead class="bg-tevo-green text-dark">
+                    <tr style="user-select: none;">
+                        <th class="align-middle text-center" style="width:5%;">Nro</th>
+                        <th class="align-middle text-center" style="width:15%;">Modulo</th>
+                        <th class="align-middle text-center" style="width:20%;">Sub Modulo</th>
+                        <th class="align-middle text-center" style="width:10%;">Codigo</th>
+                        <th class="align-middle text-center" style="width:15%;">Nombre</th>
+                        <th class="align-middle text-center" style="width:35%;">Observación</th>
+                    </tr>
+                </thead>
+                <tbody id="tbody" style="cursor: default;">
+                    <tr *ngFor="let tabAux of tablaAuxiliar; let i = index" (click)="verTablaAux(tabAux, i)"
+                        [ngClass]="{'table-active': i===editableTable1}">
+                        <td>{{ tabAux.nro }}</td>
+                        <td>{{ tabAux.subModulo.modulo.nombre }}</td>
+                        <td>{{ tabAux.subModulo.nombre }}</td>
+                        <td>{{ tabAux.codTablaAuxiliar }}</td>
+                        <td>{{ tabAux.nombre }}</td>
+                        <td>{{ tabAux.observacion }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="container-fluid mt-3 px-0" *ngIf="tablaAuxiliarDetalle">
+        <div class="row" style="margin-top: 20px;">
+            <div class="col-12">
+                <div class="float-right">
+                    <button [disabled]="eventoAgregar || (tablaAuxSeleccionado && !tablaAuxSeleccionado.indEdicion) || blnCargandoDatos || blnGuardando" (click)="nuevo()" type="button" id="btnNuevo" class="btn custom-button mr-1">Nuevo</button>
+                    <button [disabled]="!eventoNuevo || blnCargandoDatos || blnGuardando" (click)="cancelar()" type="button" id="btnNuevo1" class="btn custom-button mr-1">Cancelar</button>
+                    <button [disabled]="!eventoModificar || (tablaAuxSeleccionado && !tablaAuxSeleccionado.indEdicion) || blnCargandoDatos || blnGuardando" (click)="modificar()" type="button" id="btnNuevo2" class="btn custom-button mr-1">Editar</button>
+                    <button [disabled]="!eventoGuardar || blnCargandoDatos || blnGuardando" (click)="guardar()" type="button" id="btnNuevo3" class="btn custom-button mr-1">Guardar</button>
+                </div>
+            </div>
+        </div>
+        <div class="table-wrapper table-responsive mt-3">
+            <table class="custom-table-maestros table table-bordered table-hover">
+                <thead class="bg-tevo-green text-dark">
+                    <tr style="user-select: none;">
+                        <th class="align-middle text-center" style="width:5%;">Nro</th>
+                        <th class="align-middle text-center" style="width:15%;">Nombre</th>
+                        <th class="align-middle text-center" style="width:10%;">Abreviatura</th>
+                        <th class="align-middle text-center" style="width:10%;">Valor</th>
+                        <th class="align-middle text-center" style="width:50%;">Observación</th>
+                        <th class="align-middle text-center" style="width:10%;">Habilitar</th>
+                    </tr>
+                </thead>
+                <tbody id="tbody2" style="cursor: default;">
+                    <tr *ngFor="let item of tablaAuxiliarDetalle; let i = index"
+                        [ngClass]="{'table-active': i===editableTable2}" (click)="verTablaAuxDetalle(item, i)">
+                        <td>{{ item.nro }}</td>
+                        <td>
+                            <input type="text" [disabled]="i!=validarFila2 || blnCargandoDatos || blnGuardando" class="border-0 text bg-transparent" style="width: 100%;outline: none;" [(ngModel)]="item.nombre">
+                        </td>
+                        <td>
+                            <input type="text" [disabled]="i!=validarFila2 || blnCargandoDatos || blnGuardando" class="border-0 text bg-transparent" style="width: 100%;outline: none;" [(ngModel)]="item.abreviatura">
+                        </td>
+                        <td>
+                            <input type="text" [disabled]="i!=validarFila2 || blnCargandoDatos || blnGuardando" class="border-0 text bg-transparent" style="width: 100%;outline: none;" [(ngModel)]="item.valor">
+                        </td>
+                        <td>
+                            <input type="text" [disabled]="i!=validarFila2 || blnCargandoDatos || blnGuardando" class="border-0 text bg-transparent" style="width: 100%;outline: none;" [(ngModel)]="item.observacion">
+                        </td>
+                        <td contenteditable="false" class="align-middle text-center">
+                            <mat-slide-toggle [disabled]="i!=validarFila2 || blnCargandoDatos || blnGuardando" color="primary" [(ngModel)]="item.indHabilitado">
+                            </mat-slide-toggle>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+
+</div>
