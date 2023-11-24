@@ -7,7 +7,7 @@
                 <div class="col-8 col-xxl-6">
                     <input type="text" class="form-control text-uppercase"
                         [(ngModel)]="areaFiltro" (keyup) = "filtrar()"
-                        style="height: 30px;">
+                        style="height: 30px;" [disabled]="!eventoSearchArea">
                 </div>
             </div>
         </div>
@@ -18,7 +18,7 @@
                 <div class="col-8 col-xxl-6">
                     <input type="text" class="form-control text-uppercase"
                         [(ngModel)]="nombreFiltro" (keyup) = "filtrar()"
-                        style="height: 30px;">
+                        style="height: 30px;" [disabled]="!eventoSearchNombre">
                 </div>
             </div>
         </div>
@@ -28,7 +28,7 @@
                 <label class="col-4 col-form-label">Estado:</label>
                 <div class="col-8">
                     <select [compareWith]="compararObjeto" class="form-select pt-1" 
-                        [(ngModel)]="estadoFiltro" (change) = "filtrar()">
+                        [(ngModel)]="estadoFiltro" (change) = "filtrar()" [disabled]="!eventoSearchArea">
                         <option [ngValue]="undefined">Todas</option>
                         <option *ngFor="let est of estados" [ngValue]="est">{{ est.nombre }}</option>
                     </select>
@@ -93,15 +93,15 @@
 
                             <td>
                                 <input type="text" [disabled]="i!=validarFila" class="border-0 text-uppercase bg-transparent"
-                                    style="width: 100%;outline: none;" [(ngModel)]="sub.nombre">
+                                    style="width: 100%;outline: none;" [(ngModel)]="sub.nombre" maxlength="50">
                             </td>
                             <td>
                                 <input type="text" [disabled]="i!=validarFila" class="border-0 text-uppercase bg-transparent"
-                                    style="width: 100%;outline: none;" [(ngModel)]="sub.abreviatura">
+                                    style="width: 100%;outline: none;" [(ngModel)]="sub.abreviatura" maxlength="6">
                             </td>
                             <td>
                                 <input type="text" [disabled]="i!=validarFila" class="border-0 text-uppercase bg-transparent"
-                                    style="width: 100%;outline: none;" [(ngModel)]="sub.observacion">
+                                    style="width: 100%;outline: none;" [(ngModel)]="sub.observacion" maxlength="80">
                             </td>
                             <!-- <td>
                                 <input type="text" [disabled]="i!=validarFila" class="border-0 text-uppercase bg-transparent"
@@ -130,7 +130,7 @@
     </div>
     <div class="row mt-1">
         <div class="col-12">
-            <paginator-nav *ngIf="paginador" [enlacePaginador]="rutaPaginador" [paginador]="paginador" [habilitado]="!blnGuardandoDatos" [verNumeros]="true" (filtro)="filtrar($event)"></paginator-nav>
+            <paginator-nav *ngIf="paginador" [enlacePaginador]="rutaPaginador" [paginador]="paginador" [habilitado]="!blnGuardandoDatos && eventoNuevo" [verNumeros]="true"  (filtro)="filtrar($event)"></paginator-nav>
         </div>
     </div>
 </div>

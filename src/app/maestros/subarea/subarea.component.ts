@@ -9,12 +9,6 @@ import { TablaAuxiliarDetalle } from '../../auxiliares/tabla-auxiliar/models/tab
 import { AuthService } from '../../usuarios/auth.service';
 import { Area } from '../area/area';
 import { AreaService } from '../area/area.service';
-import { catchError, filter, map, startWith } from 'rxjs/operators';
-import {AsyncPipe} from '@angular/common';
-import {MatAutocompleteModule} from '@angular/material/autocomplete';
-import {MatInputModule} from '@angular/material/input';
-import {MatFormFieldModule} from '@angular/material/form-field';
-import {FormControl, FormsModule, ReactiveFormsModule} from '@angular/forms';
 
 @Component({
   selector: 'app-subarea',
@@ -46,6 +40,8 @@ export class SubareaComponent implements OnInit {
   eventoNuevo: boolean = true;
   eventoModificar: boolean = false;
   eventoGuardar: boolean = false;
+  eventoSearchArea: boolean = true;
+  eventoSearchNombre: boolean = true;
 
   estadoActivo: TablaAuxiliarDetalle = new TablaAuxiliarDetalle();
 
@@ -205,6 +201,8 @@ export class SubareaComponent implements OnInit {
     this.eventoNuevo = false;
     this.eventoModificar = false;
     this.eventoGuardar = true;
+    this.eventoSearchArea = false;
+    this.eventoSearchNombre = false;
   }
 
   cancelar() {
@@ -214,6 +212,9 @@ export class SubareaComponent implements OnInit {
     this.eventoModificar = false;
     this.editableTable1 = -1;
     this.validarFila = -1;
+
+    this.eventoSearchArea = true;
+    this.eventoSearchNombre = true;
 
     console.log(this.validarFila)
 
@@ -225,6 +226,8 @@ export class SubareaComponent implements OnInit {
     this.eventoNuevo = false;
     this.eventoModificar = false;
     this.validarFila = this.editableTable1;
+    this.eventoSearchArea = false;
+    this.eventoSearchNombre = false;
     
     console.log(this.validarFila);
   }
@@ -245,7 +248,7 @@ export class SubareaComponent implements OnInit {
       return false;
     }
 
-    if (!subarea.estado) {
+    if (!subarea.estado.nombre) {
       this.toastr.warning('Debe ingresar el estado de la subarea', 'Faltan datos');
       return false;
     }
@@ -266,11 +269,14 @@ export class SubareaComponent implements OnInit {
     } else {
       this.crear();
     }
+
+    this.eventoSearchArea = true;
+    this.eventoSearchNombre = true;
   }
 
   crear() {
     this.subareaService.crearSubarea(this.subareaSeleccionada).subscribe(res => {
-      this.toastr.success('Cargo registrado correctamente', 'Registro');
+      this.toastr.success('Subarea registrado correctamente', 'Registro');
       this.filtrar();
     })
   }
@@ -278,7 +284,9 @@ export class SubareaComponent implements OnInit {
   actualizar() {
     this.subareaSeleccionada.idUsuarioModifica = this.authService.usuario.id;
     this.subareaService.actualizarSubarea(this.subareaSeleccionada).subscribe(res => {
-      this.toastr.success('Cargo actualizado correctamente', 'Actualización');
+      console.log(this.subareaSeleccionada)
+      console.log(res)
+      this.toastr.success('Subarea actualizada correctamente', 'Actualización');
       this.filtrar();
     })
   }

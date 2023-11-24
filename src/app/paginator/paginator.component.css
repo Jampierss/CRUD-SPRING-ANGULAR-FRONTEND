@@ -1,22 +1,22 @@
+
+
+
 /* elementos bloqueados */
 
-.pagination>li>a,.pagination>li>span {
+.pagination>li>a,
+.pagination>li>span {
     background-color: white;
     color: black;
 }
 
+/* Colore al poner el mouse encima (solo si está habilitado) */
 
-/* Colore al poner el mouse encima */
-
-.pagination>li>a:focus,
 .pagination>li>a:hover,
-.pagination>li>span:focus,
 .pagination>li>span:hover {
     color: white;
     background-color: var(--azul-base);
     border-color: var(--azul-base);
 }
-
 
 /* elemento seleccionado */
 
@@ -30,3 +30,4 @@
     background-color: var(--azul-base);
     border-color: var(--azul-base);
 }
+
