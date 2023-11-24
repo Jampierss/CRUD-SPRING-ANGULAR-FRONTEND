@@ -26,12 +26,16 @@ export class SubareaService {
     );
   }
 
-  getSubareasPaginate(nombre: string, estadoId: number, pagina: number): Observable<Subarea[]> {
+  getSubareasPaginate(nombre: string, areaNombre: string, estadoId: number, pagina: number): Observable<Subarea[]> {
     let i: number = 0;
     let url: string = `${this.urlEndPoint}/page`
 
     if (nombre && nombre.length > 0) {
       url += `&nombre=${nombre}`;
+    }
+
+    if (areaNombre && areaNombre.length > 0) {
+      url += `&areaNombre=${areaNombre}`;
     }
 
     if (estadoId != undefined && estadoId > -1) {
@@ -58,6 +62,7 @@ export class SubareaService {
     );
 
   }
+
 
   getSubareaAutocomplete(nombre: string): Observable<Subarea[]> {
     return this.http.get<Subarea[]>(`${this.urlEndPoint}/autocomplete?nombre=${nombre}`).pipe(

@@ -7,6 +7,14 @@ import { Subarea } from './subarea';
 import { ToastrService } from 'ngx-toastr';
 import { TablaAuxiliarDetalle } from '../../auxiliares/tabla-auxiliar/models/tabla-auxiliar-detalle';
 import { AuthService } from '../../usuarios/auth.service';
+import { Area } from '../area/area';
+import { AreaService } from '../area/area.service';
+import { catchError, filter, map, startWith } from 'rxjs/operators';
+import {AsyncPipe} from '@angular/common';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import {MatInputModule} from '@angular/material/input';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {FormControl, FormsModule, ReactiveFormsModule} from '@angular/forms';
 
 @Component({
   selector: 'app-subarea',
@@ -27,6 +35,12 @@ export class SubareaComponent implements OnInit {
   estadoF: Observable<TablaAuxiliarDetalle[]>;
   estados: TablaAuxiliarDetalle[] = [];
 
+  areaF: Observable<Area[]>;
+  areas: Area[] = [];
+
+  term: string;
+
+
   subareaSeleccionada: Subarea = new Subarea();
 
   eventoNuevo: boolean = true;
@@ -37,6 +51,7 @@ export class SubareaComponent implements OnInit {
 
   nombreFiltro: string = '';
   estadoFiltro: TablaAuxiliarDetalle;
+  areaFiltro: string = '';
 
   blnGuardandoDatos: boolean = true;
 
@@ -45,7 +60,8 @@ export class SubareaComponent implements OnInit {
               private toastr: ToastrService,
               private auxiliarService: TablaAuxiliarService,
               private activatedRoute: ActivatedRoute,
-              private authService: AuthService) { }
+              private authService: AuthService,
+              private areaService: AreaService) { }
 
   ngOnInit(): void {
 
@@ -71,6 +87,8 @@ export class SubareaComponent implements OnInit {
 
       this.filtrar(page);
     });
+
+  
   }
 
   // cargar() {
@@ -78,6 +96,10 @@ export class SubareaComponent implements OnInit {
   //     this.subareas = sub as Subarea[];
   //     console.log(this.subareas);
   //   })
+  // }
+
+  // filtrarByArea() {
+  //   console.log("AJAM")
   // }
 
   filtrar(pagina: number = 0) {
@@ -92,7 +114,7 @@ export class SubareaComponent implements OnInit {
     if (pagina == 0 && this.page != pagina) {
       this.router.navigate([this.rutaPaginador + '/0']);
     } else {
-      this.subareaService.getSubareasPaginate(this.nombreFiltro, this.estadoFiltro?.tablaAuxiliarDetalleId.id, pagina).subscribe((lis: any) => {
+      this.subareaService.getSubareasPaginate(this.nombreFiltro, this.areaFiltro,  this.estadoFiltro?.tablaAuxiliarDetalleId.id, pagina).subscribe((lis: any) => {
         this.subareas = lis.content as Subarea[];
         console.log(this.subareas)
         this.paginador = lis;
@@ -109,6 +131,13 @@ export class SubareaComponent implements OnInit {
     return this.auxiliarService.autocompleteListEstado('ESTGRL', filterValue);
   }
 
+  private _filterA(value: string): Observable<Area[]> {
+    const filterValue = value.toUpperCase();
+    console.log(filterValue)
+    console.log(this.areaService.autocompleteListArea(filterValue))
+    return this.areaService.autocompleteListArea(filterValue);
+  }
+
   cambiarValorEstado(event) {
     if (event.keyCode != 38 && event.keyCode != 40) {
       let autoResponse = event.target.value;
@@ -116,7 +145,19 @@ export class SubareaComponent implements OnInit {
     }
   }
 
+  cambiarValorArea(event) {
+    if (event.keyCode != 38 && event.keyCode != 40) {
+      let autoResponse = event.target.value;
+      this.areaF = autoResponse ? this._filterA(autoResponse): new Observable<Area[]>();
+      console.log(this.areaF)
+    }
+  }
+
   mostrarEstado(response ?: TablaAuxiliarDetalle): string | undefined {
+    return response ? response.nombre: undefined;
+  }
+
+  mostrarArea(response ?: Area): string | undefined {
     return response ? response.nombre: undefined;
   }
 

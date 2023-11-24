@@ -17,6 +17,7 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
 import { ToastrModule } from 'ngx-toastr';
 import { ImageViewerModule } from 'ng2-image-viewer';
 import {MatChipsModule} from '@angular/material/chips';
+import {MatInputModule} from '@angular/material/input';
 
 import localeES from '@angular/common/locales/es';
 //Pipes
@@ -130,6 +131,7 @@ const routes: Routes = [
     FormsModule,
     ReactiveFormsModule,
     MatAutocompleteModule,
+    MatInputModule,
     MatButtonModule,
     MatCheckboxModule,
     MatDialogModule,

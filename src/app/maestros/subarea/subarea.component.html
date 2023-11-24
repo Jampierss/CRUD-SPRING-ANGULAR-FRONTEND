@@ -1,5 +1,17 @@
 <div class="container-fluid">
     <div class="row mt-2 mb-3">
+        
+        <div class="col-2">
+            <div class="row">
+                <label class="col-4 col-form-label">Area:</label>
+                <div class="col-8 col-xxl-6">
+                    <input type="text" class="form-control text-uppercase"
+                        [(ngModel)]="areaFiltro" (keyup) = "filtrar()"
+                        style="height: 30px;">
+                </div>
+            </div>
+        </div>
+
         <div class="col-2">
             <div class="row">
                 <label class="col-4 col-form-label">Nombre:</label>
@@ -10,6 +22,7 @@
                 </div>
             </div>
         </div>
+
         <div class="col-2">
             <div class="row">
                 <label class="col-4 col-form-label">Estado:</label>
@@ -22,7 +35,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-8">
+        <div class="col-6">
             <div class="float-end">
                 <button type="button" class="btn custom-button me-1" style="width: 100px !important;"
                     [disabled]="!eventoNuevo || blnGuardandoDatos"
@@ -57,35 +70,27 @@
                         <tr *ngFor="let sub of subareas; let i = index;" (click)="verSubarea(sub, i)"
                         [ngClass]="{'table-active': i===editableTable1}">
                             <td>{{ sub.nro }}</td>
-                            <td>
+                            <!-- <td>
                                 <input type="text" [disabled]="i!=validarFila" class="border-0 text-uppercase bg-transparent"
                                     style="width: 100%;outline: none;" *ngIf="sub.area" [(ngModel)]="sub.area.nombre">
-                            </td>
-                            <!-- <td>
-                                <mat-form-field class="border-0 text-uppercase bg-transparent">
-                                    <input type="text" matInput [formControl]="myControl" [matAutocomplete]="auto">
-                                    <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
-                                      @for (option of filteredOptions | async; track option) {
-                                        <mat-option [value]="option">{{option.name}}</mat-option>
-                                      }
-                                    </mat-autocomplete>
-                                  </mat-form-field>
                             </td> -->
-                            <!-- <td>
+                            
+                            <td>
                                 <input type="text" class="border-0 text-uppercase bg-transparent"
-                                    (keyup)="cambiarValorEstado($event)"
+                                    (keyup)="cambiarValorArea($event)"
                                     [disabled]="i!=validarFila"
-                                    matInput [matAutocomplete]="autoF"
-                                    [(ngModel)]="sub.area.nombre"
+                                    matInput [matAutocomplete]="autoA"
+                                    [(ngModel)]="sub.area"
                                     style="width: 100%;height: 20px;outline: none;"
-                                    autocomplete="autoF">
-                                <mat-autocomplete #autoF="matAutocomplete" [displayWith]="mostrarEstado">
+                                    autocomplete="autoA">
+                                <mat-autocomplete #autoA="matAutocomplete" [displayWith]="mostrarArea">
                                     <mat-option style="height: 22px;font-size: 0.75rem"
-                                        *ngFor="let est of estadoF | async" [value]="est">
+                                        *ngFor="let est of areaF | async" [value]="est">
                                         {{est.nombre}}
                                     </mat-option>
                                 </mat-autocomplete>
-                            </td> -->
+                            </td>
+
                             <td>
                                 <input type="text" [disabled]="i!=validarFila" class="border-0 text-uppercase bg-transparent"
                                     style="width: 100%;outline: none;" [(ngModel)]="sub.nombre">
