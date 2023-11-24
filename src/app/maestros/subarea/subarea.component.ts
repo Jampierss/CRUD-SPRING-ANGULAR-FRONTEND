@@ -230,18 +230,23 @@ export class SubareaComponent implements OnInit {
   }
 
   validado(subarea: Subarea): boolean {
+    if (!subarea.area.nombre) {
+      this.toastr.warning('Debe ingresar el area de la subarea', 'Faltan datos');
+      return false;
+    }
+
     if (!subarea) {
-      this.toastr.warning('No se ha registrado cargo', 'Faltan datos');
+      this.toastr.warning('No se ha registrado la subarea', 'Faltan datos');
       return false;
     }
 
     if (!subarea.nombre || subarea.nombre.length == 0) {
-      this.toastr.warning('Debe ingresar el nombre del cargo', 'Faltan datos');
+      this.toastr.warning('Debe ingresar el nombre de la subarea', 'Faltan datos');
       return false;
     }
 
     if (!subarea.estado) {
-      this.toastr.warning('Debe ingresar el estado del cargo', 'Faltan datos');
+      this.toastr.warning('Debe ingresar el estado de la subarea', 'Faltan datos');
       return false;
     }
 
